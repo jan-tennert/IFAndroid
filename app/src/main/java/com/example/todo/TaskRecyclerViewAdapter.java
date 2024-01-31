@@ -19,6 +19,13 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * Adapter für die RecyclerView, die die Aufgaben anzeigt.
+ * <p>
+ * Warum das so kompliziert ist weiß ich auch nicht. Ich will Jetpack Compose zurück.
+ * <p>
+ * Im Grunde ist der dafür da, die Daten anzuzeigen und möglicherweise auch zu verändern.
+ */
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
     private List<Task> tasks;
@@ -28,7 +35,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     private static final String DATE_TIME_FORMAT = "dd.MM.yyyy HH:mm";
     private final DateTimeFormatter dateTimeFormatter;
 
-    @SuppressLint("NewApi") //...and this one
+    @SuppressLint("NewApi") //...
     public TaskRecyclerViewAdapter(Context context, List<Task> tasks, TodoListListener listener) {
         this.tasks = tasks;
         this.context = context;

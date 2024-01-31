@@ -28,16 +28,30 @@ public class MainActivity extends AppCompatActivity implements TodoListListener,
     private TaskRecyclerViewAdapter adapter;
     public static Executor ioExecutor;
 
+    //Ungefähr equivalent zu main() in normalen Java-Programmen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Der Executor wird später für Datenbankzugriffe verwendet (um nicht den Main-Thread zu blockieren)
         ioExecutor = Executors.newSingleThreadExecutor();
+
+        //Die Datenbank wird initialisiert
         db = Room.databaseBuilder(this, AppDatabase.class, "todo").build();
+
+        //Die von Android erstellte Klasse von dem layout "screen.xml" wird verwendet um die Views zu erstellen (abhängig natürlich von dem Gerät, auf dem die App läuft)
         ScreenBinding binding = ScreenBinding.inflate(getLayoutInflater());
+
+        //Die erstellten Views werden als Content der Activity gesetzt
         setContentView(binding.getRoot());
 
+        //Die Methode sucht einfach die im Layout festgelegten Komponenten und speichert sie in den entsprechenden Variablen
         assignViews();
+
+        //Die Methode fügt den Buttons die entsprechenden Aktionen hinzu
         addActionHandlers();
+
+        //Die Methode lädt die Daten aus der Datenbank und zeigt sie an
         loadData();
     }
 
@@ -47,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements TodoListListener,
         });
     }
 
+    //Zeigt im Grunde den "Create Task" Dialog an, auch wenn das maximal kompliziert gemacht ist
     private void showCreateTaskDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         CreateTaskDialogFragment fragment = new CreateTaskDialogFragment(this);
@@ -59,9 +74,15 @@ public class MainActivity extends AppCompatActivity implements TodoListListener,
 
     @SuppressLint("NotifyDataSetChanged")
     private void loadData() {
+        //Führt den Code im Thread aus, der für Datenbankzugriffe verwendet wird
         ioExecutor.execute(() -> {
+            //Ruft die von uns erstellte Methode auf, die alle Tasks aus der Datenbank lädt
             List<Task> taskData = db.taskDao().getAll();
+
+            //Setzt die Tasks in dem Adapter, der die Daten an die RecyclerView (also diese Listenanzeige) weitergibt
             adapter.setTasks(taskData);
+
+            //Sagt dem Adapter, dass er sich aktualisieren soll
             runOnUiThread(() -> {
                 adapter.notifyDataSetChanged();
             });

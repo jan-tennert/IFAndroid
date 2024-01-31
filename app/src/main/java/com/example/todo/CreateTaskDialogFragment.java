@@ -27,6 +27,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ * Fragment für den Dialog zum Erstellen einer neuen Aufgabe.
+ *
+ * Fragmente sind wiederverwendbare UI-Komponenten, die in Activities eingebunden werden können.
+ *
+ * Hier wird ein DialogFragment verwendet, das einen Dialog anzeigt, der über den gesamten Bildschirm geht.
+ */
 public class CreateTaskDialogFragment extends DialogFragment {
 
     private Toolbar toolbar;
@@ -51,6 +58,11 @@ public class CreateTaskDialogFragment extends DialogFragment {
         setStyle(STYLE_NORMAL, R.style.Theme_App_FullScreenDialog);
     }
 
+    /**
+     * Hier wird der Dialog erstellt und die Views initialisiert.
+     *
+     * Listener werden gesetzt und die Buttons werden mit Aktionen verknüpft.
+     */
     @SuppressLint("NewApi") //...
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -103,7 +115,8 @@ public class CreateTaskDialogFragment extends DialogFragment {
         return view;
     }
 
-    @SuppressLint("NewApi") //Still same warning, still ignore it
+    //Noch eine Methode
+    @SuppressLint("NewApi") //...
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -123,6 +136,7 @@ public class CreateTaskDialogFragment extends DialogFragment {
         });
     }
 
+    //Und noch eine Methode
     @Override
     public void onStart() {
         super.onStart();

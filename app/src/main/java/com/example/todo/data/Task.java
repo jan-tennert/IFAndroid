@@ -7,15 +7,25 @@ import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
+/**
+ * Entität für die Tabelle "task".
+ */
 @Entity(tableName = "task")
 public class Task {
 
+    //Primärer Schlüssel "id" wird automatisch generiert
     @PrimaryKey(autoGenerate = true)
     private int id;
+
+    //Mehr Spalten
     private String content;
     private boolean done;
+
+    //Spalten können umbenannt werden (um nicht den variablen Namen als Spaltennamen zu verwenden)
     @ColumnInfo(name = "due_time_millis")
     private long dueTimeMillis;
+
+    //Constructor (es gibt zwei, weil wir einen brauchen, der von Room verwendet wird und einen, den wir verwenden. Kann man bestimmt auch sinnvoller lösen)
 
     @Ignore
     public Task(String content, boolean done, long dueTimeMillis) {
@@ -30,6 +40,8 @@ public class Task {
         this.done = done;
         this.dueTimeMillis = dueTimeMillis;
     }
+
+    //Getter und Setter
 
     public int getId() {
         return id;
@@ -62,6 +74,8 @@ public class Task {
     public void setDueTimeMillis(long dueTimeMillis) {
         this.dueTimeMillis = dueTimeMillis;
     }
+
+    //Noch ein paar notwendige Methoden für die App
 
     @Override
     public boolean equals(Object o) {
