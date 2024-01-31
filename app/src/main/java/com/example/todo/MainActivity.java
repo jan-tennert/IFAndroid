@@ -5,11 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -17,20 +14,17 @@ import androidx.room.Room;
 import com.example.todo.data.AppDatabase;
 import com.example.todo.data.Task;
 import com.example.todo.databinding.ScreenBinding;
-import com.example.todo.ui.CreateTaskDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class MainActivity extends AppCompatActivity implements TodoItemListener {
+public class MainActivity extends AppCompatActivity implements TodoListListener, CreateTaskListener {
 
-    private ScreenBinding binding;
     private AppDatabase db;
 
     private View createButton;
-    private RecyclerView taskList;
     private TaskRecyclerViewAdapter adapter;
     public static Executor ioExecutor;
 
@@ -39,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements TodoItemListener 
         super.onCreate(savedInstanceState);
         ioExecutor = Executors.newSingleThreadExecutor();
         db = Room.databaseBuilder(this, AppDatabase.class, "todo").build();
-        binding = ScreenBinding.inflate(getLayoutInflater());
+        ScreenBinding binding = ScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         assignViews();
@@ -55,14 +49,10 @@ public class MainActivity extends AppCompatActivity implements TodoItemListener 
 
     private void showCreateTaskDialog() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        CreateTaskDialogFragment fragment = new CreateTaskDialogFragment(db.taskDao(), adapter);
+        CreateTaskDialogFragment fragment = new CreateTaskDialogFragment(this);
 
-        // The device is smaller, so show the fragment fullscreen.
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        // For a polished look, specify a transition animation.
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        // To make it fullscreen, use the 'content' root view as the container
-        // for the fragment, which is always the root view for the activity.
         transaction.add(android.R.id.content, fragment)
                 .addToBackStack(null).commit();
     }
@@ -80,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements TodoItemListener 
 
     private void assignViews() {
         createButton = findViewById(R.id.create_task);
-        taskList = findViewById(R.id.tasks);
+        RecyclerView taskList = findViewById(R.id.tasks);
         adapter = new TaskRecyclerViewAdapter(this, new ArrayList<>(), this);
         taskList.setAdapter(adapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
@@ -105,5 +95,14 @@ public class MainActivity extends AppCompatActivity implements TodoItemListener 
         });
         adapter.removeTask(position);
         adapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onCreateTask(Task task) {
+        MainActivity.ioExecutor.execute(() -> {
+            db.taskDao().insertAll(task);
+        });
+        adapter.addTask(task);
+        adapter.notifyItemInserted(adapter.getItemCount() - 1);
     }
 }

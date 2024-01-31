@@ -1,6 +1,6 @@
 package com.example.todo;
 
-public interface TodoItemListener {
+public interface TodoListListener {
 
     void onCheckedChanged(int position, boolean checked);
 

@@ -1,33 +1,39 @@
 package com.example.todo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todo.data.Task;
-import com.example.todo.data.TaskDao;
-import com.google.android.material.button.MaterialButton;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
     private List<Task> tasks;
     private final Context context;
-    private final TodoItemListener listener;
+    private final TodoListListener listener;
 
-    public TaskRecyclerViewAdapter(Context context, List<Task> tasks, TodoItemListener listener) {
+    private static final String DATE_TIME_FORMAT = "dd.MM.yyyy HH:mm";
+    private final DateTimeFormatter dateTimeFormatter;
+
+    @SuppressLint("NewApi") //...and this one
+    public TaskRecyclerViewAdapter(Context context, List<Task> tasks, TodoListListener listener) {
         this.tasks = tasks;
         this.context = context;
         this.listener = listener;
+        dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
     }
 
     @NonNull
@@ -41,13 +47,14 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         );
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void onBindViewHolder(@NonNull TaskRecyclerViewAdapter.ViewHolder holder, int position) {
         Task task = tasks.get(position);
         holder.done.setChecked(task.isDone());
         holder.content.setText(task.getContent());
         if (task.getDueTimeMillis() != -1) {
-            holder.dueDateTime.setText(String.format("%s", task.getDueTimeMillis()));
+            holder.dueDateTime.setText(String.format("Until %s", dateTimeFormatter.format(Instant.ofEpochMilli(task.getDueTimeMillis()).atZone(ZoneId.systemDefault()))));
         } else {
             holder.dueDateTime.setText("");
         }
@@ -80,7 +87,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         TextView content, dueDateTime;
         Button delete;
 
-        public ViewHolder(@NonNull View itemView, TodoItemListener listener) {
+        public ViewHolder(@NonNull View itemView, TodoListListener listener) {
             super(itemView);
 
             done = itemView.findViewById(R.id.is_done);
