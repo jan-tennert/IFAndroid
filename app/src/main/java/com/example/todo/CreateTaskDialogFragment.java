@@ -41,6 +41,8 @@ public class CreateTaskDialogFragment extends DialogFragment {
     private final CreateTaskListener listener;
     private static final String DATE_FORMAT = "dd.MM.yyyy";
     private final DateTimeFormatter dateFormatter;
+
+    //Warum ich hier zwei Variablen für das Datum habe, weiß ich auch nicht. It works on my machine.
     private LocalDate dueDate = null;
     private Pair<Integer, Integer> dueTime = null;
 
@@ -62,6 +64,8 @@ public class CreateTaskDialogFragment extends DialogFragment {
      * Hier wird der Dialog erstellt und die Views initialisiert.
      *
      * Listener werden gesetzt und die Buttons werden mit Aktionen verknüpft.
+     *
+     * Und ja man hätte das mehr aufteilen können
      */
     @SuppressLint("NewApi") //...
     @Override
