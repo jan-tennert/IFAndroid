@@ -40,7 +40,6 @@ public class TicTacToe {
 
     public boolean checkIfValid(int row, int column, String player) {
         //Schauen ob der Zug gültig ist
-        action.vibrate(500, 1);
         return true;
     }
 

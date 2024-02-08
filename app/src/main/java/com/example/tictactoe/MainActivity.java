@@ -75,8 +75,6 @@ public class MainActivity extends AppCompatActivity implements GameActionListene
                 .setMessage(message)
                 .setPositiveButton(R.string.ok, (dialog, which) -> {})
                 .show();
-        resetFields();
-        updateTurnText();
     }
 
     @Override
