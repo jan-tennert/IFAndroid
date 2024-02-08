@@ -2,7 +2,9 @@ package com.example.tictactoe;
 
 public interface GameActionListener {
 
-    void onPlayerWin(FieldState player);
+    void resetFields();
+
+    void showDialog(String title, String message);
 
     /**
      * Vibrate the device

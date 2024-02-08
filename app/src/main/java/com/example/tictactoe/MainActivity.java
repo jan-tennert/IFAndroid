@@ -6,16 +6,12 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tictactoe.databinding.ScreenBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements GameActionListener {
 
@@ -53,17 +49,18 @@ public class MainActivity extends AppCompatActivity implements GameActionListene
         int row = fieldButton.getRow();
         int column = fieldButton.getColumn();
         if(!ticTacToe.onFieldClicked(row, column)) {
-            FieldState fieldState = ticTacToe.getFieldState(row, column);
-            fieldButton.setText(fieldState.name());
+            String fieldState = ticTacToe.getFieldState(row, column);
+            fieldButton.setText(fieldState);
             updateTurnText();
         }
     }
 
     private void updateTurnText() {
-        turnText.setText(getString(R.string.turn, ticTacToe.getCurrentPlayer().name()));
+        turnText.setText(getString(R.string.turn, ticTacToe.getCurrentPlayer()));
     }
 
-    private void resetFields() {
+    @Override
+    public void resetFields() {
         for (FieldButton[] fieldButton : fieldButtons) {
             for (FieldButton button : fieldButton) {
                 button.setText("");
@@ -72,10 +69,10 @@ public class MainActivity extends AppCompatActivity implements GameActionListene
     }
 
     @Override
-    public void onPlayerWin(FieldState player) {
+    public void showDialog(String title, String message) {
         new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.player_won_title)
-                .setMessage(getString(R.string.player_won, player.name()))
+                .setTitle(title)
+                .setMessage(message)
                 .setPositiveButton(R.string.ok, (dialog, which) -> {})
                 .show();
         resetFields();
