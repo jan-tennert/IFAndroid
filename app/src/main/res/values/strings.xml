@@ -1,11 +1,8 @@
 <resources>
-    <string name="add">add</string>
-    <string name="create_task">Create Task</string>
-    <string name="content">Content</string>
-    <string name="app_name">Todo App</string>
-    <string name="save">save</string>
-    <string name="task">Task</string>
-    <string name="date">Date</string>
-    <string name="time">Time</string>
-    <string name="date_time_limit">Add time limit</string>
+    <string name="app_name">TicTacToe</string>
+    <string name="turn">Am Zug: %1$s</string>
+    <string name="reset">Zurücksetzen</string>
+    <string name="player_won">Spieler %1$s hat gewonnen!</string>
+    <string name="player_won_title">Spiel Ende</string>
+    <string name="ok">OK</string>
 </resources>

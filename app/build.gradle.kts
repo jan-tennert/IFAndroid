@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.todo"
+    namespace = "com.example.tictactoe"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.todo"
+        applicationId = "com.example.tictactoe"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
