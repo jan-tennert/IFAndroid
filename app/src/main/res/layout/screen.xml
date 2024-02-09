@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -90,8 +89,8 @@
                 style="@style/verticalLine"/>
 
             <com.example.tictactoe.FieldButton
-                app:row="3"
-                app:column="2"
+                app:row="2"
+                app:column="3"
                 android:id="@+id/b3"
                 style="@style/column" />
 
@@ -104,8 +103,8 @@
             style="@style/row">
 
             <com.example.tictactoe.FieldButton
-                app:row="1"
-                app:column="3"
+                app:row="3"
+                app:column="1"
                 android:id="@+id/c1"
                 style="@style/column" />
 
@@ -113,8 +112,8 @@
                 style="@style/verticalLine"/>
 
             <com.example.tictactoe.FieldButton
-                app:row="2"
-                app:column="3"
+                app:row="3"
+                app:column="2"
                 android:id="@+id/c2"
                 style="@style/column" />
 
@@ -130,4 +129,16 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/robot_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/robot_24px"
+        android:focusable="true" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

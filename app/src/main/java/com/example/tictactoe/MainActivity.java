@@ -35,7 +35,10 @@ public class MainActivity extends AppCompatActivity implements GameActionListene
         fieldButtons = new FieldButton[][] {{binding.a1, binding.a2, binding.a3}, {binding.b1, binding.b2, binding.b3}, {binding.c1, binding.c2, binding.c3}};
         binding.resetButton.setOnClickListener(v -> {
             ticTacToe.reset();
-            resetFields();
+            updateTurnText();
+        });
+        binding.robotSettings.setOnClickListener(v -> {
+            showBotSettingsDialog();
         });
 
         //Hier wird ein neues TicTacToe-Objekt erstellt
@@ -43,14 +46,26 @@ public class MainActivity extends AppCompatActivity implements GameActionListene
         updateTurnText();
     }
 
+    private void showBotSettingsDialog() {
+        String[] selections = new String[]{ "Deaktiviert", "Als X", "Als O"};
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Bot Einstellungen")
+                .setSingleChoiceItems(selections, ticTacToe.getBotState().ordinal(), (dialog, which) -> {
+                    ticTacToe.setBotState(BotState.values()[which]);
+                })
+                .setNeutralButton("Abbrechen", (dialog, which) -> {})
+                .setPositiveButton("Starten", (dialog, which) -> {
+                    ticTacToe.onBotGameStart();
+                })
+                .show();
+    }
+
     public void fieldClicked(View view) {
         if(!(view instanceof FieldButton)) return;
         FieldButton fieldButton = (FieldButton) view;
         int row = fieldButton.getRow();
         int column = fieldButton.getColumn();
-        if(!ticTacToe.onFieldClicked(row, column)) {
-            String fieldState = ticTacToe.getFieldState(row, column);
-            fieldButton.setText(fieldState);
+        if(!ticTacToe.onFieldClicked(row - 1, column - 1, false)) {
             updateTurnText();
         }
     }
@@ -85,5 +100,10 @@ public class MainActivity extends AppCompatActivity implements GameActionListene
         } else {
             v.vibrate(duration);
         }
+    }
+
+    @Override
+    public void setField(int row, int column, String symbol) {
+        fieldButtons[row][column].setText(symbol);
     }
 }

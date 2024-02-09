@@ -4,6 +4,8 @@ public interface GameActionListener {
 
     void resetFields();
 
+    void setField(int row, int column, String symbol);
+
     void showDialog(String title, String message);
 
     /**
