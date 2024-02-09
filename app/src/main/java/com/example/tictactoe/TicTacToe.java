@@ -52,9 +52,9 @@ public class TicTacToe {
     //Zusatz (der Bot wird mit dem angegebenen Symbol platzieren)
     public void onBotTurn(String symbol) {
         //Mit irgendeinem intelligenten Algorithmus
-        // Beispiel für das eigentliche setzen dann:
-        // onFieldClicked(0, 2, true);
-        // 0 ist die Reihe und 2 die Zeile
+        //Beispiel für das eigentliche setzen dann:
+        //   onFieldClicked(0, 2, true);
+        //0 ist die Reihe und 2 die Zeile
     }
 
     //.................
