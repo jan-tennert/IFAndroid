@@ -38,8 +38,4 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
-    implementation(libs.navigation.fragment)
-    implementation(libs.navigation.ui)
-    implementation(libs.room.runtime)
-    annotationProcessor(libs.room.compiler)
 }

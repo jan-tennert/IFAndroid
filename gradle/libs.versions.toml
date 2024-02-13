@@ -1,15 +1,9 @@
 [versions]
 appcompat = "1.6.1"
 material = "1.11.0"
-navigation = "2.7.6"
 constraintlayout = "2.1.4"
-room = "2.6.1"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
-navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigation" }
-navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigation" }
-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
